@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mostafa & Yasmin — Wedding Invitation</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Mostafa & Yasmin on Sunday, the 30th of August 2026 at قاعة فور سيزون." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --emerald:   #1a4a3a;
+      --emerald-2: #22604c;
+      --emerald-3: #0d2e24;
+      --gold:      #c9a84c;
+      --gold-light:#e8c96a;
+      --gold-pale: #f5e6b8;
+      --ivory:     #faf6ee;
+      --ivory-2:   #f2ead8;
+      --cream:     #fffdf7;
+    }
+
+    @keyframes fadeInDown  { from { opacity:0; transform:translateY(-30px);} to { opacity:1; transform:translateY(0);} }
+    @keyframes fadeInUp    { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0);} }
+    @keyframes fadeIn      { from { opacity:0; } to { opacity:1; } }
+    @keyframes shimmer     { 0%,100% { filter: brightness(1);   } 50% { filter: brightness(1.35); } }
+    @keyframes rotateSlow  { from { transform: rotate(0deg);   } to { transform: rotate(360deg); } }
+    @keyframes floatUp     { 0%,100% { transform: translateY(0);   } 50% { transform: translateY(-8px); } }
+    @keyframes borderGlow  { 0%,100% { box-shadow: 0 0 18px 2px rgba(201,168,76,.25); } 50% { box-shadow: 0 0 38px 8px rgba(201,168,76,.55); } }
+    @keyframes lineDraw    { from { width:0; } to { width:100%; } }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at center, #0f3328 0%, #071f18 60%, #040e0b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* ─── Petals / ambient particles ─────────────────── */
+    .particles { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+    .particle  {
+      position:absolute; border-radius:50%;
+      background: radial-gradient(circle, rgba(201,168,76,.55) 0%, transparent 70%);
+      animation: floatUp linear infinite;
+    }
+
+    /* ─── Card wrapper ───────────────────────────────── */
+    .card-wrapper {
+      position: relative; z-index:1;
+      display: flex; flex-direction: column; align-items: center;
+      animation: fadeIn 1.2s ease both;
+    }
+
+    /* ─── Outer envelope / shadow ────────────────────── */
+    .card-outer {
+      width: min(560px, 96vw);
+      background: linear-gradient(160deg, var(--emerald-3) 0%, #0a2b20 50%, var(--emerald-3) 100%);
+      border-radius: 4px;
+      padding: 5px;
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,.3),
+        0 0 60px 10px rgba(0,0,0,.7),
+        inset 0 0 80px rgba(201,168,76,.06);
+      animation: borderGlow 4s ease-in-out infinite;
+    }
+
+    /* ─── Inner card ─────────────────────────────────── */
+    .card {
+      background: var(--ivory);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+      position: relative;
+      overflow: hidden;
+      padding: 52px 44px 48px;
+    }
+
+    /* ─── Arabesque corner SVGs ──────────────────────── */
+    .corner {
+      position:absolute; width:130px; height:130px;
+      opacity:.85;
+    }
+    .corner-tl { top:0;    left:0;   transform-origin: top left;    }
+    .corner-tr { top:0;    right:0;  transform-origin: top right;   transform: scaleX(-1); }
+    .corner-bl { bottom:0; left:0;   transform-origin: bottom left; transform: scaleY(-1); }
+    .corner-br { bottom:0; right:0;  transform-origin: bottom right;transform: scale(-1,-1); }
+
+    /* ─── Gold border lines ──────────────────────────── */
+    .border-line {
+      position:absolute; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      height: 1px;
+    }
+    .border-line.top    { top:18px;    left:14px; right:14px; animation: shimmer 3s ease infinite; }
+    .border-line.bottom { bottom:18px; left:14px; right:14px; animation: shimmer 3s ease infinite 1.5s; }
+    .border-line-v {
+      position:absolute; background: linear-gradient(180deg, transparent, var(--gold), transparent);
+      width:1px;
+    }
+    .border-line-v.left  { left:18px;  top:14px; bottom:14px; }
+    .border-line-v.right { right:18px; top:14px; bottom:14px; }
+
+    /* ─── Top emblem area ────────────────────────────── */
+    .emblem-wrap {
+      display:flex; flex-direction:column; align-items:center; gap:6px;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s .3s ease both;
+    }
+
+    .crescent-svg {
+      width:72px; height:72px;
+      animation: floatUp 4s ease-in-out infinite, shimmer 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(201,168,76,.5));
+    }
+
+    /* ─── Divider ornament ───────────────────────────── */
+    .divider {
+      display:flex; align-items:center; gap:10px;
+      margin: 10px 0;
+    }
+    .divider-line {
+      flex:1; height:1px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    }
+    .divider-diamond {
+      width:6px; height:6px; background:var(--gold);
+      transform:rotate(45deg); flex-shrink:0;
+    }
+
+    /* ─── Bismillah / header text ────────────────────── */
+    .bismillah {
+      font-family:'Cormorant Garamond', serif;
+      font-style:italic; font-size:.92rem;
+      color: var(--emerald-2);
+      letter-spacing:.08em;
+      text-align:center;
+      margin-bottom:8px;
+      animation: fadeIn 1.2s .5s ease both;
+    }
+
+    /* ─── Invite line ────────────────────────────────── */
+    .invite-text {
+      font-family:'Cormorant Garamond', serif;
+      font-size:1rem; font-weight:400; font-style:italic;
+      color:#6b5a3a; letter-spacing:.05em;
+      text-align:center;
+      animation: fadeIn 1s .6s ease both;
+    }
+
+    /* ─── Names ──────────────────────────────────────── */
+    .names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(3.2rem, 10vw, 4.6rem);
+      color: var(--emerald);
+      text-align:center;
+      line-height:1.05;
+      margin: 14px 0 4px;
+      text-shadow: 0 2px 18px rgba(201,168,76,.22);
+      animation: fadeInDown 1s .4s ease both;
+    }
+    .names .ampersand {
+      color: var(--gold);
+      font-size:.7em;
+      display:block;
+      margin:-8px 0;
+    }
+
+    /* ─── Date / Details ─────────────────────────────── */
+    .details-block {
+      text-align:center;
+      margin-top:18px;
+      animation: fadeInUp 1s .7s ease both;
+    }
+    .date-line {
+      font-family:'Cinzel', serif;
+      font-size:1.05rem; font-weight:600;
+      color: var(--emerald);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .detail-row {
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.08rem; font-style:italic;
+      color:#5a4a30;
+      line-height:1.9;
+    }
+    .detail-row strong {
+      font-style:normal; font-weight:600;
+      color: var(--emerald);
+      letter-spacing:.06em;
+    }
+
+    /* ─── Venue ──────────────────────────────────────── */
+    .venue-name {
+      font-family:'Cinzel', serif;
+      font-size:1.3rem; font-weight:500;
+      color: var(--emerald);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin: 6px 0 2px;
+    }
+
+    /* ─── Botanical footer ───────────────────────────── */
+    .botanical-footer {
+      margin-top:22px;
+      display:flex; justify-content:center;
+      animation: fadeIn 1.5s 1s ease both;
+    }
+    .botanical-footer svg { width:220px; opacity:.7; }
+
+    /* ─── RSVP ribbon ────────────────────────────────── */
+    .rsvp-wrap {
+      margin-top:20px;
+      text-align:center;
+      animation: fadeInUp 1s .9s ease both;
+    }
+    .rsvp-label {
+      font-family:'Cinzel', serif;
+      font-size:.78rem; letter-spacing:.22em;
+      color: var(--gold);
+      text-transform:uppercase;
+    }
+
+    /* ─── Print styles ───────────────────────────────── */
+    @media print {
+      body { background:#fff; padding:0; }
+      .card-outer { box-shadow:none; width:100%; border:2px solid var(--gold); }
+      .particles  { display:none; }
+    }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width:480px) {
+      .card { padding:40px 28px 36px; }
+      .corner { width:90px; height:90px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient particles -->
+  <div class="particles" id="particles"></div>
+
+  <div class="card-wrapper">
+    <div class="card-outer">
+      <div class="card">
+
+        <!-- Border lines -->
+        <div class="border-line top"></div>
+        <div class="border-line bottom"></div>
+        <div class="border-line-v left"></div>
+        <div class="border-line-v right"></div>
+
+        <!-- Arabesque corners -->
+        <!-- TOP LEFT -->
+        <svg class="corner corner-tl" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity=".9">
+            <!-- Outer arc -->
+            <path d="M4 4 Q4 126 126 126" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+            <path d="M10 4 Q10 120 126 120" stroke="#c9a84c" stroke-width=".5" fill="none"/>
+            <!-- Geometric lattice -->
+            <line x1="4" y1="4"   x2="36" y2="4"   stroke="#c9a84c" stroke-width=".8"/>
+            <line x1="4" y1="4"   x2="4"  y2="36"  stroke="#c9a84c" stroke-width=".8"/>
+            <line x1="36" y1="4"  x2="4"  y2="36"  stroke="#c9a84c" stroke-width=".5" opacity=".5"/>
+            <path d="M4,60 Q32,32 60,4" stroke="#c9a84c" stroke-width=".7" fill="none"/>
+            <path d="M4,90 Q47,47 90,4" stroke="#c9a84c" stroke-width=".7" fill="none"/>
+            <!-- Star motif -->
+            <path d="M22 22 L28 16 L34 22 L28 28 Z" stroke="#c9a84c" stroke-width=".9" fill="#c9a84c" fill-opacity=".15"/>
+            <path d="M18 22 L28 12 L38 22 L28 32 Z" stroke="#c9a84c" stroke-width=".7" fill="none"/>
+            <!-- Flower -->
+            <circle cx="22" cy="22" r="3.5" fill="#c9a84c" fill-opacity=".3" stroke="#c9a84c" stroke-width=".6"/>
+            <!-- Scrolls -->
+            <path d="M38 10 C50 10 55 20 48 26 C41 32 32 28 36 20" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <path d="M10 38 C10 50 20 55 26 48 C32 41 28 32 20 36" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <!-- Rose -->
+            <circle cx="64" cy="14" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M60 14 Q64 8 68 14 Q64 20 60 14Z" fill="#c9a84c" fill-opacity=".2" stroke="#c9a84c" stroke-width=".5"/>
+            <circle cx="14" cy="64" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M14 60 Q20 64 14 68 Q8 64 14 60Z" fill="#c9a84c" fill-opacity=".2" stroke="#c9a84c" stroke-width=".5"/>
+            <!-- Leaf sprigs -->
+            <path d="M72 8 C76 4 82 6 80 12 C78 16 74 14 72 8Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+            <path d="M8 72 C4 76 6 82 12 80 C16 78 14 74 8 72Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+            <path d="M84 4 C88 8 86 14 80 12" stroke="#2a6044" stroke-width=".6" fill="none" opacity=".7"/>
+            <path d="M4 84 C8 88 14 86 12 80" stroke="#2a6044" stroke-width=".6" fill="none" opacity=".7"/>
+          </g>
+        </svg>
+        <svg class="corner corner-tr" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity=".9">
+            <path d="M4 4 Q4 126 126 126" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+            <path d="M10 4 Q10 120 126 120" stroke="#c9a84c" stroke-width=".5" fill="none"/>
+            <line x1="4" y1="4"   x2="36" y2="4"   stroke="#c9a84c" stroke-width=".8"/>
+            <line x1="4" y1="4"   x2="4"  y2="36"  stroke="#c9a84c" stroke-width=".8"/>
+            <line x1="36" y1="4"  x2="4"  y2="36"  stroke="#c9a84c" stroke-width=".5" opacity=".5"/>
+            <path d="M4,60 Q32,32 60,4" stroke="#c9a84c" stroke-width=".7" fill="none"/>
+            <path d="M4,90 Q47,47 90,4" stroke="#c9a84c" stroke-width=".7" fill="none"/>
+            <path d="M22 22 L28 16 L34 22 L28 28 Z" stroke="#c9a84c" stroke-width=".9" fill="#c9a84c" fill-opacity=".15"/>
+            <path d="M18 22 L28 12 L38 22 L28 32 Z" stroke="#c9a84c" stroke-width=".7" fill="none"/>
+            <circle cx="22" cy="22" r="3.5" fill="#c9a84c" fill-opacity=".3" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M38 10 C50 10 55 20 48 26 C41 32 32 28 36 20" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <path d="M10 38 C10 50 20 55 26 48 C32 41 28 32 20 36" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <circle cx="64" cy="14" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M60 14 Q64 8 68 14 Q64 20 60 14Z" fill="#c9a84c" fill-opacity=".2" stroke="#c9a84c" stroke-width=".5"/>
+            <circle cx="14" cy="64" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M14 60 Q20 64 14 68 Q8 64 14 60Z" fill="#c9a84c" fill-opacity=".2" stroke="#c9a84c" stroke-width=".5"/>
+            <path d="M72 8 C76 4 82 6 80 12 C78 16 74 14 72 8Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+            <path d="M8 72 C4 76 6 82 12 80 C16 78 14 74 8 72Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+          </g>
+        </svg>
+        <svg class="corner corner-bl" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity=".9">
+            <path d="M4 4 Q4 126 126 126" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+            <path d="M10 4 Q10 120 126 120" stroke="#c9a84c" stroke-width=".5" fill="none"/>
+            <line x1="4" y1="4"   x2="36" y2="4"   stroke="#c9a84c" stroke-width=".8"/>
+            <line x1="4" y1="4"   x2="4"  y2="36"  stroke="#c9a84c" stroke-width=".8"/>
+            <path d="M22 22 L28 16 L34 22 L28 28 Z" stroke="#c9a84c" stroke-width=".9" fill="#c9a84c" fill-opacity=".15"/>
+            <circle cx="22" cy="22" r="3.5" fill="#c9a84c" fill-opacity=".3" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M38 10 C50 10 55 20 48 26 C41 32 32 28 36 20" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <path d="M10 38 C10 50 20 55 26 48 C32 41 28 32 20 36" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <circle cx="64" cy="14" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <circle cx="14" cy="64" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M72 8 C76 4 82 6 80 12 C78 16 74 14 72 8Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+            <path d="M8 72 C4 76 6 82 12 80 C16 78 14 74 8 72Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+          </g>
+        </svg>
+        <svg class="corner corner-br" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity=".9">
+            <path d="M4 4 Q4 126 126 126" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+            <path d="M10 4 Q10 120 126 120" stroke="#c9a84c" stroke-width=".5" fill="none"/>
+            <line x1="4" y1="4"   x2="36" y2="4"   stroke="#c9a84c" stroke-width=".8"/>
+            <line x1="4" y1="4"   x2="4"  y2="36"  stroke="#c9a84c" stroke-width=".8"/>
+            <path d="M22 22 L28 16 L34 22 L28 28 Z" stroke="#c9a84c" stroke-width=".9" fill="#c9a84c" fill-opacity=".15"/>
+            <circle cx="22" cy="22" r="3.5" fill="#c9a84c" fill-opacity=".3" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M38 10 C50 10 55 20 48 26 C41 32 32 28 36 20" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <path d="M10 38 C10 50 20 55 26 48 C32 41 28 32 20 36" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <circle cx="64" cy="14" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <circle cx="14" cy="64" r="5" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".6"/>
+            <path d="M72 8 C76 4 82 6 80 12 C78 16 74 14 72 8Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+            <path d="M8 72 C4 76 6 82 12 80 C16 78 14 74 8 72Z" fill="#2a6044" fill-opacity=".45" stroke="#2a6044" stroke-width=".5"/>
+          </g>
+        </svg>
+
+        <!-- ── Crescent + Mandala emblem ── -->
+        <div class="emblem-wrap">
+          <svg class="crescent-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Mandala rings -->
+            <circle cx="50" cy="62" r="18" stroke="#c9a84c" stroke-width=".8" fill="none"/>
+            <circle cx="50" cy="62" r="13" stroke="#c9a84c" stroke-width=".5" fill="none"/>
+            <circle cx="50" cy="62" r="7"  fill="#c9a84c" fill-opacity=".18" stroke="#c9a84c" stroke-width=".6"/>
+            <!-- Mandala petals -->
+            <g transform="translate(50,62)">
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(0)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(45)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(90)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(135)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(225)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(270)"/>
+              <ellipse cx="0" cy="-14" rx="3" ry="6" fill="#c9a84c" fill-opacity=".3" transform="rotate(315)"/>
+            </g>
+            <!-- Crescent -->
+            <path d="M50 6 A28 28 0 1 1 50 52 A20 20 0 1 0 50 6Z" fill="#c9a84c" fill-opacity=".9"/>
+            <path d="M50 6 A28 28 0 1 1 50 52 A20 20 0 1 0 50 6Z" fill="url(#crescentGrad)"/>
+            <defs>
+              <radialGradient id="crescentGrad" cx="40%" cy="40%">
+                <stop offset="0%" stop-color="#f5e6b8"/>
+                <stop offset="100%" stop-color="#c9a84c"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Top divider -->
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-diamond"></div>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Invite line -->
+        <p class="invite-text">Together with their families, invite you to celebrate the wedding of</p>
+
+        <!-- Names -->
+        <div class="names">
+          Mostafa
+          <span class="ampersand">&amp;</span>
+          Yasmin
+        </div>
+
+        <!-- Divider -->
+        <div class="divider" style="margin-top:10px;">
+          <div class="divider-line"></div>
+          <div class="divider-diamond"></div>
+          <div class="divider-diamond" style="margin:0 4px;"></div>
+          <div class="divider-diamond"></div>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Details block -->
+        <div class="details-block">
+          <div class="date-line">Sunday, the 30th of August 2026</div>
+
+          <div class="detail-row">
+            <em>At Seven O'Clock in the Evening</em>
+          </div>
+
+          <div class="divider" style="margin:14px 0;">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line"></div>
+          </div>
+
+          <div class="detail-row" style="margin-bottom:4px;">
+            <em>The Celebration will be held at</em>
+          </div>
+
+          <div class="venue-name">قاعة فور سيزون</div>
+
+          <div class="divider" style="margin:14px 0 10px;">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line"></div>
+          </div>
+        </div>
+
+        <!-- Botanical footer illustration -->
+        <div class="botanical-footer">
+          <svg viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Vine stem -->
+            <path d="M10 40 Q55 20 110 30 Q165 40 210 20" stroke="#2a6044" stroke-width="1.2" fill="none"/>
+            <!-- Left rose -->
+            <circle cx="18" cy="36" r="8" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".8"/>
+            <path d="M14 36 Q18 28 22 36 Q18 44 14 36Z" fill="#c9a84c" fill-opacity=".25"/>
+            <path d="M18 32 Q26 36 18 40 Q10 36 18 32Z" fill="#c9a84c" fill-opacity=".25"/>
+            <!-- Right rose -->
+            <circle cx="202" cy="24" r="8" fill="#c9a84c" fill-opacity=".12" stroke="#c9a84c" stroke-width=".8"/>
+            <path d="M198 24 Q202 16 206 24 Q202 32 198 24Z" fill="#c9a84c" fill-opacity=".25"/>
+            <path d="M202 20 Q210 24 202 28 Q194 24 202 20Z" fill="#c9a84c" fill-opacity=".25"/>
+            <!-- Leaves left -->
+            <path d="M30 32 C34 24 42 26 38 34Z" fill="#2a6044" fill-opacity=".55"/>
+            <path d="M42 28 C48 22 54 26 50 32Z" fill="#2a6044" fill-opacity=".45"/>
+            <!-- Leaves right -->
+            <path d="M190 28 C184 20 176 24 182 30Z" fill="#2a6044" fill-opacity=".55"/>
+            <path d="M178 24 C172 18 166 22 170 28Z" fill="#2a6044" fill-opacity=".45"/>
+            <!-- Center ornament -->
+            <circle cx="110" cy="30" r="4" fill="#c9a84c" fill-opacity=".4" stroke="#c9a84c" stroke-width=".6"/>
+            <circle cx="110" cy="30" r="2" fill="#c9a84c" fill-opacity=".7"/>
+            <!-- Small berries -->
+            <circle cx="72"  cy="24" r="2.2" fill="#c9a84c" fill-opacity=".4"/>
+            <circle cx="80"  cy="22" r="1.8" fill="#c9a84c" fill-opacity=".35"/>
+            <circle cx="140" cy="26" r="2.2" fill="#c9a84c" fill-opacity=".4"/>
+            <circle cx="148" cy="24" r="1.8" fill="#c9a84c" fill-opacity=".35"/>
+          </svg>
+        </div>
+
+        <!-- RSVP -->
+        <div class="rsvp-wrap">
+          <div class="divider" style="margin-bottom:10px;">
+            <div class="divider-line"></div>
+            <div class="divider-diamond"></div>
+            <div class="divider-line"></div>
+          </div>
+          <div class="rsvp-label">♦ &nbsp; With Love &nbsp; ♦</div>
+        </div>
+
+      </div><!-- .card -->
+    </div><!-- .card-outer -->
+  </div><!-- .card-wrapper -->
+
+  <script>
+    // Generate ambient gold particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 28; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 120 + 40;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        opacity:${Math.random()*.12 + .04};
+        animation-duration:${Math.random()*8+6}s;
+        animation-delay:-${Math.random()*10}s;
+      `;
+      container.appendChild(p);
+    }
+  </script>
+</body>
+</html>
